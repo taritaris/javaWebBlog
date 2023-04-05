@@ -83,14 +83,4 @@ public class CurdUtil {
         }
         return result;
     }
-    public static void main(String[] args) {
-        CurdUtil curdUtil = new CurdUtil();
-        List<Map<String, Object>> maps = curdUtil.queryForList("select * from blog_user",null);
-        System.out.println(maps);
-//        String sql = "INSERT INTO blog_user(number, username,password,birthday,message,title_img_path) VALUES(?, ?, ?, ?, ?, ?)";
-//        Object[] params = {"12312312","李四","123456","2022-01-05","admin","/123"};
-//        int execute = curdUtil.execute(sql, params);
-//        System.out.println(execute);
-
-    }
 }

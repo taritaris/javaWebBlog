@@ -80,9 +80,4 @@ public class RSAUtil {
         // 解密数据
         return cipher.doFinal(data);
     }
-
-    public static void main(String[] args) throws Exception {
-        byte[] encrypt = RSAUtil.encrypt("sad".getBytes());
-        System.out.println(encrypt);
-    }
 }

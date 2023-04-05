@@ -38,24 +38,5 @@ public class MysqlUtil {
             e.printStackTrace();
         }
     }
-
-    public static void main(String[] args) {
-        MysqlUtil mysqlUtil = new MysqlUtil();
-        Connection conn = null;
-        try {
-            conn = mysqlUtil.getConnection();
-            String sql = "SELECT COUNT(*) FROM blog_user";
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int count = rs.getInt(1);
-                System.out.println("Total records: " + count);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            mysqlUtil.closeConnection(conn);
-        }
-    }
 }
 

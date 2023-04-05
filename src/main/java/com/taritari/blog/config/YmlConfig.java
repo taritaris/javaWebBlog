@@ -14,12 +14,4 @@ public class YmlConfig {
         Map<String, Object> datasource = (Map<String, Object>) obj.get(applicationName);
         return datasource;
     }
-    public static void main(String[] args) {
-        YmlConfig ymlConfig = new YmlConfig();
-        Map<String, Object> datasource = ymlConfig.getApplication("datasource");
-        String url = datasource.get("url").toString();
-        String username = datasource.get("username").toString();
-        System.out.println("url: " + url);
-        System.out.println("username: " + username);
-    }
 }

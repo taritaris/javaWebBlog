@@ -22,8 +22,4 @@ public class SnowflakeUtils {
     public static synchronized String generateIdStr() {
         return snowflake.nextIdStr();
     }
-
-    public static void main(String[] args) {
-        System.out.println(SnowflakeUtils.generateId());
-    }
 }
