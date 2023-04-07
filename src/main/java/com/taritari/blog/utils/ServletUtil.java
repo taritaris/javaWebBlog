@@ -2,7 +2,6 @@ package com.taritari.blog.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.taritari.blog.emum.ResultEnum;
-import com.taritari.blog.utils.Result;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

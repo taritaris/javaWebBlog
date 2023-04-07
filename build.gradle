@@ -26,4 +26,5 @@ dependencies {
     compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
     runtimeOnly 'javax.servlet:javax.servlet-api:4.0.1'
     implementation 'org.yaml:snakeyaml:1.29'
+    implementation 'redis.clients:jedis:3.7.0'
 }

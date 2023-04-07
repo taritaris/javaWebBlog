@@ -6,6 +6,7 @@ import com.taritari.blog.emum.ResultEnum;
 import com.taritari.blog.entity.BlogUser;
 import com.taritari.blog.entity.dto.TokenDto;
 import com.taritari.blog.utils.*;
+import redis.clients.jedis.Jedis;
 
 import java.util.Base64;
 
@@ -19,10 +20,16 @@ public class BlogUserService {
     JwtUtils jwtUtils = new JwtUtils();
     UserDao userDao = new UserDao();
 
-    public Result login(String username, String password) throws Exception {
+    public Result login(String username, String password, String verify) throws Exception {
         String password2MD5 = md5Utils.string2MD5(password);
+        JedisPoolUtil jedisPoolUtil = new JedisPoolUtil();
+        Jedis pool = jedisPoolUtil.getPool();
+        String name = pool.get(username);
         BlogUser blogUser = userDao.login(username, password2MD5);
         if (ObjectUtil.isEmpty(blogUser)) {
+            return Result.buildResult(ResultEnum.NOT_FOUND);
+        }
+        if (!name.equals(verify)){
             return Result.buildResult(ResultEnum.NOT_FOUND);
         }
         String token = jwtUtils.generateToken(Base64.getUrlEncoder().withoutPadding().encodeToString(RSAUtil.encrypt(blogUser.getUsername().getBytes())));

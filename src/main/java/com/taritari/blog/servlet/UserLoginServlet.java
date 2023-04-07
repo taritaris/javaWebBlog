@@ -22,6 +22,10 @@ import java.io.IOException;
 @WebServlet("/user/login")
 public class UserLoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
+        response.setHeader("Access-Control-Max-Age", "3600");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=utf-8");
         BlogUserService blogUserService = new BlogUserService();
@@ -29,12 +33,14 @@ public class UserLoginServlet extends HttpServlet {
         LoginDto loginDto = entityUtil.parseRequestToEntity(request, LoginDto.class);
         Result result;
         try {
-            result = blogUserService.login(loginDto.username, loginDto.password);
+            result = blogUserService.login(loginDto.username, loginDto.password,loginDto.verify);
+            System.out.println(result);
         } catch (Exception e) {
             result = Result.buildResult(ResultEnum.ERROR, e.getMessage());
         }
         ServletUtil.sendJson(response, result);
     }
+
 
 }
 
