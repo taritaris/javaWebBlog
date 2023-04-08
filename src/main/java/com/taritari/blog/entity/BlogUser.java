@@ -14,4 +14,5 @@ public class BlogUser {
     private Date birthday;
     private String message;
     private String titleImgPath;
+    private String email;
 }

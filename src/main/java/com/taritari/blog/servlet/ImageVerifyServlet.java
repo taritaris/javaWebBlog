@@ -26,10 +26,6 @@ public class ImageVerifyServlet extends HttpServlet {
              2.把验证码上的文本存在session中
              3.把验证码图片发送给客户端
              */
-        resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
-        resp.setHeader("Access-Control-Max-Age", "3600");
-        resp.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
         ImageVerificationUtil imageVerificationUtil = new ImageVerificationUtil();     //用我们的验证码类，生成验证码类对象
         JedisPoolUtil jedisPoolUtil = new JedisPoolUtil();
         String username = req.getParameter("username");

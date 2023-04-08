@@ -35,8 +35,8 @@ public class UserDao {
     }
     public int insert(BlogUser blogUser) {
         CurdUtil curdUtil = new CurdUtil();
-        String sql = "INSERT INTO blog_user (number,username, password, birthday, message, title_img_path) VALUES (?, ?, ?, ?, ?, ?)";
-        Object[] params = {blogUser.getNumber(),blogUser.getUsername(), blogUser.getPassword(), blogUser.getBirthday(), blogUser.getMessage(), blogUser.getTitleImgPath()};
+        String sql = "INSERT INTO blog_user (number,username, password, birthday, message, title_img_path, password) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        Object[] params = {blogUser.getNumber(),blogUser.getUsername(), blogUser.getPassword(), blogUser.getBirthday(), blogUser.getMessage(), blogUser.getTitleImgPath(), blogUser.getEmail()};
         return curdUtil.execute(sql, params);
     }
 }
