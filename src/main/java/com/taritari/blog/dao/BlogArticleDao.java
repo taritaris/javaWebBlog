@@ -41,7 +41,7 @@ public class BlogArticleDao {
                 articleDto.setAuthor(resultMap.get("author").toString());
                 articleDto.setTitle(resultMap.get("title").toString());
                 articleDto.setContent(resultMap.get("content").toString());
-                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 articleDto.setCreateTime(sdf2.format(resultMap.get("createTime")));
                 articleDto.setNumbers(resultMap.get("numbers").toString());
                 articleDto.setImgSrc(resultMap.get("imgSrc").toString());

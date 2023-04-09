@@ -40,7 +40,7 @@ public class BlogCommentDao {
                 blogComment.setNumber(resultMap.get("number").toString());
                 blogComment.setUserNumber(resultMap.get("userNumbers").toString());
                 blogComment.setArticleNumber(resultMap.get("articleNumbers").toString());
-                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
+                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 blogComment.setCreateTime(sdf2.format(resultMap.get("createTime")));
                 Object parentNumber = resultMap.get("parentNumber");
                 if (ObjectUtil.isNotEmpty(parentNumber)){
