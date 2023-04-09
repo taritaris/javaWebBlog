@@ -70,3 +70,11 @@ com/taritari/blog/entity/vo/NumbersVo.java
  com.taritari.blog.entity.vo.NumbersVo
 com/taritari/blog/servlet/getArticleByNumberServlet.java
  com.taritari.blog.servlet.getArticleByNumberServlet
+com/taritari/blog/dao/BlogCommentDao.java
+ com.taritari.blog.dao.BlogCommentDao
+com/taritari/blog/entity/BlogComment.java
+ com.taritari.blog.entity.BlogComment
+com/taritari/blog/servlet/getCommentServlet.java
+ com.taritari.blog.servlet.getCommentServlet
+com/taritari/blog/service/BlogCommentService.java
+ com.taritari.blog.service.BlogCommentService
