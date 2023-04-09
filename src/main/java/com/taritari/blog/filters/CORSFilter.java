@@ -2,6 +2,7 @@ package com.taritari.blog.filters;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 /**
@@ -15,6 +16,7 @@ public class CORSFilter implements Filter{
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         //变成http的
         HttpServletResponse resp = (HttpServletResponse) response;
+        HttpServletRequest req = (HttpServletRequest) request;
         // 添加参数，允许任意domain访问
         resp.setContentType("text/html;charset=UTF-8");
         //禁用缓存，确保网页信息是最新数据

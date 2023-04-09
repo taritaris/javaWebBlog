@@ -2,6 +2,7 @@ package com.taritari.blog.service;
 
 import com.taritari.blog.dao.BlogArticleDao;
 import com.taritari.blog.entity.BlogArticle;
+import com.taritari.blog.entity.dto.ArticleDto;
 
 import java.util.List;
 
@@ -26,5 +27,19 @@ public class BlogArticleService {
         String author = encryptionAndDecryptionService.getUserName(token);
         List<BlogArticle> blogArticles = blogArticleDao.selectArticlesByAuthor(author);
         return blogArticles;
+    }
+    /**
+     * 主页面的文章列表
+     * */
+    public List<ArticleDto> indexArticleList(){
+        List<ArticleDto> articleDtos = blogArticleDao.selectArticle();
+        return articleDtos;
+    }
+    /**
+     * 通过numbers获取单个文章
+     * */
+    public ArticleDto getArticleByNumber(String number){
+        ArticleDto articleByNumbers = blogArticleDao.getArticleByNumbers(number);
+        return articleByNumbers;
     }
 }

@@ -22,10 +22,6 @@ import java.io.IOException;
 @WebServlet("/user/login")
 public class UserLoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String username = request.getParameter("username");
-//        String verify = request.getParameter("verifyCode");
-//        String password = request.getParameter("password");
-//        LoginDto loginDto = new LoginDto(username,password,verify);
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=utf-8");
         BlogUserService blogUserService = new BlogUserService();

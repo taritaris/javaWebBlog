@@ -23,4 +23,6 @@ public class BlogArticle {
     private Date modifyTime;
     private char isDelete;
     private String numbers;
+    private String imgSrc;
+    private int tagId;
 }

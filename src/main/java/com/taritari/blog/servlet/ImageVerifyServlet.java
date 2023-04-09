@@ -31,6 +31,9 @@ public class ImageVerifyServlet extends HttpServlet {
         String username = req.getParameter("username");
         Jedis pool = jedisPoolUtil.getPool();
         BufferedImage image = imageVerificationUtil.getImage();  //获取验证码
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Methods", "GET");
+        resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
         pool.set(username, imageVerificationUtil.getText()); //将验证码的文本存在session中
         imageVerificationUtil.output(image, resp.getOutputStream());//将验证码图片响应给客户端
     }
