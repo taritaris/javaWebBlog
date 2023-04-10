@@ -53,4 +53,12 @@ public class BlogUserService {
         }
         return Result.buildResult(ResultEnum.BAD_REQUEST);
     }
+    /**
+     * 通过用户名获取用户信息
+     * @param userName 用户名
+     * */
+    public BlogUser getUserInfoByUserName(String userName){
+        BlogUser userInfoByUserName = userDao.getUserInfoByUserName(userName);
+        return userInfoByUserName;
+    }
 }

@@ -24,7 +24,6 @@ public class UserDao {
             Map<String, Object> resultMap = resultList.get(0);
             blogUser.setId(Integer.parseInt(resultMap.get("id").toString()));
             blogUser.setUsername((String) resultMap.get("username"));
-            blogUser.setPassword((String) resultMap.get("password"));
             blogUser.setBirthday((Date) resultMap.get("birthday"));
             blogUser.setMessage((String) resultMap.get("message"));
             blogUser.setTitleImgPath((String) resultMap.get("title_img_path"));
@@ -38,5 +37,25 @@ public class UserDao {
         String sql = "INSERT INTO blog_user (number,username, password, birthday, message, title_img_path, email) VALUES (?, ?, ?, ?, ?, ?, ?)";
         Object[] params = {blogUser.getNumber(),blogUser.getUsername(), blogUser.getPassword(), blogUser.getBirthday(), blogUser.getMessage(), blogUser.getTitleImgPath(), blogUser.getEmail()};
         return curdUtil.execute(sql, params);
+    }
+    public BlogUser getUserInfoByUserName(String username) {
+        CurdUtil curdUtil = new CurdUtil();
+        String sql = "SELECT * FROM blog_user WHERE username=?";
+        Object[] params ={username};
+        List<Map<String, Object>> resultList = curdUtil.queryForList(sql, params);
+        if (resultList.size() == 1) {
+            BlogUser blogUser = new BlogUser();
+            Map<String, Object> resultMap = resultList.get(0);
+            blogUser.setId(Integer.parseInt(resultMap.get("id").toString()));
+            blogUser.setUsername(resultMap.get("username").toString());
+            blogUser.setPassword(resultMap.get("password").toString());
+            blogUser.setBirthday((Date) resultMap.get("birthday"));
+            blogUser.setMessage(resultMap.get("message").toString());
+            blogUser.setTitleImgPath(resultMap.get("title_img_path").toString());
+            blogUser.setEmail(resultMap.get("email").toString());
+            return blogUser;
+        } else {
+            return null;
+        }
     }
 }

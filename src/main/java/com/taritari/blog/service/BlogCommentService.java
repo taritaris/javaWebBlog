@@ -24,22 +24,24 @@ public class BlogCommentService {
         List<BlogComment> blogCommentByArticleNumbers = blogCommentDao.getBlogCommentByParentNumber(parentNumber);
         return blogCommentByArticleNumbers;
     }
-    public List<Map<BlogComment,List<BlogComment>>> getComment(String numbers){
+    public List<BlogComment> getComment(String numbers){
+        List<BlogComment> blogComments = new ArrayList<>();
         List<BlogComment> blogCommentByArticle = getBlogCommentByArticle(numbers);
-        List<Map<BlogComment,List<BlogComment>>> list = new ArrayList<>();
+
         for (int i = 0;i<blogCommentByArticle.size();i++){
-            Map<BlogComment,List<BlogComment>> blogCommentListMap = new HashMap<>();
             BlogComment blogComment = blogCommentByArticle.get(i);
             String number = blogComment.getNumber();
             List<BlogComment> blogCommentByParentNumber = getBlogCommentByParentNumber(number);
             List<BlogComment> blogCommentList = new ArrayList<>();
+            List<BlogComment> newList = new ArrayList<>();
             for (int j = 0;j<blogCommentByParentNumber.size();j++){
-                BlogComment blogComments = blogCommentByParentNumber.get(j);
-                blogCommentList.add(blogComments);
+                BlogComment blogCommentChild = blogCommentByParentNumber.get(j);
+                newList.add(blogCommentChild);
             }
-            blogCommentListMap.put(blogComment,blogCommentList);
-            list.add(blogCommentListMap);
+            blogComment.setReplies(newList);
+            blogComments.add(blogComment);
         }
-        return list;
+
+        return blogComments;
     }
 }

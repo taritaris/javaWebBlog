@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author taritari
@@ -23,4 +24,5 @@ public class BlogComment {
     private String parentNumber;
     private String comment;
     private String parentUser;
+    private List<BlogComment> replies;
 }

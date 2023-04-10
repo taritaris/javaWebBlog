@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author taritari
@@ -31,7 +30,8 @@ public class getCommentServlet extends HttpServlet {
         BlogCommentService blogCommentService = new BlogCommentService();
         EntityUtil entityUtil = new EntityUtil();
         BlogComment blogComment = entityUtil.parseRequestToEntity(request, BlogComment.class);
-        List<Map<BlogComment, List<BlogComment>>> comment = blogCommentService.getComment(blogComment.getNumber());
+        List<BlogComment> comment = blogCommentService.getComment(blogComment.getNumber());
+        System.out.println(comment);
         ServletUtil.sendJson(response, Result.buildResult(ResultEnum.OK,comment));
     }
 }
