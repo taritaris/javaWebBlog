@@ -62,7 +62,7 @@ public class BlogCommentDao {
 
     public List<NewCommentVo> getCommentNews(String userName){
         CurdUtil curdUtil = new CurdUtil();
-        String sql = "SELECT id,userNumbers,`comment` FROM blog_comment  WHERE articleNumbers in (SELECT numbers FROM blog_article where author = ?) AND userNumbers !=? ORDER BY createTime desc;";
+        String sql = "SELECT id,userNumbers,`comment` FROM blog_comment  WHERE articleNumbers in (SELECT numbers FROM blog_article where author = ?) AND userNumbers !=? ORDER BY createTime desc LIMIT 5;";
         Object[] userNames = {userName,userName};
         List<NewCommentVo> newCommentVos = new ArrayList<>();
         List<Map<String, Object>> resultList = curdUtil.queryForList(sql, userNames);
@@ -78,5 +78,20 @@ public class BlogCommentDao {
             e.printStackTrace();
         }
         return newCommentVos;
+    }
+    public int getCommentCountByNumber(String number){
+        CurdUtil curdUtil = new CurdUtil();
+        String sql = "SELECT count(*) as count FROM blog_comment WHERE articleNumbers =?";
+        Object[] userNames = {number};
+        List<Map<String, Object>> resultList = curdUtil.queryForList(sql, userNames);
+        int count = 0;
+        try {
+            for (Map<String, Object> resultMap : resultList) {
+                count = Convert.toInt(resultMap.get("count"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

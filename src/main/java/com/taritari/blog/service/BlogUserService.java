@@ -5,10 +5,12 @@ import com.taritari.blog.dao.UserDao;
 import com.taritari.blog.emum.ResultEnum;
 import com.taritari.blog.entity.BlogUser;
 import com.taritari.blog.entity.dto.TokenDto;
+import com.taritari.blog.entity.vo.UserByCommentNumber;
 import com.taritari.blog.utils.*;
 import redis.clients.jedis.Jedis;
 
 import java.util.Base64;
+import java.util.List;
 
 /**
  * @author taritari
@@ -60,5 +62,19 @@ public class BlogUserService {
     public BlogUser getUserInfoByUserName(String userName){
         BlogUser userInfoByUserName = userDao.getUserInfoByUserName(userName);
         return userInfoByUserName;
+    }
+    /**
+     * 通过用户名找出热门评论用户
+     * @param userName 用户名
+     * */
+    public List<UserByCommentNumber> numberOfUserReviews(String userName){
+        List<UserByCommentNumber> userByCommentNumbers = userDao.numberOfUserReviews(userName);
+        for (int i =0;i<userByCommentNumbers.size();i++){
+            String name = userByCommentNumbers.get(i).getUserName();
+            BlogUserService blogUserService = new BlogUserService();
+            BlogUser userInfoByUserName = blogUserService.getUserInfoByUserName(name);
+            userByCommentNumbers.get(i).setImgSrc(userInfoByUserName.getTitleImgPath());
+        }
+        return userByCommentNumbers;
     }
 }

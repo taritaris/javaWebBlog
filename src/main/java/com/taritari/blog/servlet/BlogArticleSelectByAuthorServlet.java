@@ -28,9 +28,11 @@ public class BlogArticleSelectByAuthorServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=utf-8");
-
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, HEAD, DELETE, PUT");
         String token = request.getParameter("token");
-        List<BlogArticle> blogArticles = blogArticleService.selectArticleByAuthor(token);
+        int size = Integer.parseInt(request.getParameter("size"));
+        List<BlogArticle> blogArticles = blogArticleService.selectArticleByAuthor(token,size);
 
         Result result = Result.buildResult(ResultEnum.OK, blogArticles);
         PrintWriter out = response.getWriter();

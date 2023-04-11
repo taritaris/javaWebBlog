@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 
 /**
  * @author taritari
@@ -21,5 +20,7 @@ public class ArticleDto {
     private String createTime;
     private String numbers;
     private String imgSrc;
+    private int CommentCount;
+    private int views;
     private String tag;
 }

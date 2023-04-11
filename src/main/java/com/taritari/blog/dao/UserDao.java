@@ -1,12 +1,10 @@
 package com.taritari.blog.dao;
 
 import com.taritari.blog.entity.BlogUser;
+import com.taritari.blog.entity.vo.UserByCommentNumber;
 import com.taritari.blog.utils.CurdUtil;
 
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author taritari
@@ -58,5 +56,23 @@ public class UserDao {
         } else {
             return null;
         }
+    }
+    public List<UserByCommentNumber> numberOfUserReviews(String username){
+        CurdUtil curdUtil = new CurdUtil();
+        String sql = "SELECT userNumbers,COUNT(*) as count FROM blog_comment WHERE articleNumbers in (SELECT numbers FROM blog_article WHERE author=?) AND parentNumber is not null AND userNumbers != ? GROUP BY userNumbers LIMIT 5";
+        Object[] params ={username,username};
+        List<Map<String, Object>> resultList = curdUtil.queryForList(sql, params);
+        List<UserByCommentNumber> userByCommentNumbers = new ArrayList<>();
+        int i = 1;
+        for (Map<String, Object> resultMap : resultList) {
+            UserByCommentNumber userByCommentNumber = new UserByCommentNumber();
+            userByCommentNumber.setId(i);
+            userByCommentNumber.setUserName(resultMap.get("userNumbers").toString());
+            userByCommentNumber.setCount(Integer.parseInt(resultMap.get("count").toString()));
+            userByCommentNumbers.add(userByCommentNumber);
+            i++;
+        }
+            return userByCommentNumbers;
+
     }
 }

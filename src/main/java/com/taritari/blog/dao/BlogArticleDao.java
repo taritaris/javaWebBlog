@@ -23,17 +23,18 @@ public class BlogArticleDao {
         List<Map<String, Object>> resultList = curdUtil.queryForList(sql, null);
         return getBlogArticles(resultList);
     }
-    public List<BlogArticle> selectArticlesByAuthor(String author) {
+    public List<BlogArticle> selectArticlesByAuthor(String author,int size) {
         CurdUtil curdUtil = new CurdUtil();
-        String sql = "SELECT * FROM blog_article WHERE author = ? AND is_delete = 0";
-        Object[] authors = {author};
+        String sql = "SELECT * FROM blog_article WHERE author = ? AND is_delete = 0 LIMIT ?,5";
+        Object[] authors = {author,size};
         List<Map<String, Object>> resultList = curdUtil.queryForList(sql, authors);
         return getBlogArticles(resultList);
     }
-    public List<ArticleDto> selectArticle() {
+    public List<ArticleDto> selectArticle(String userName,int size) {
         CurdUtil curdUtil = new CurdUtil();
-        String sql = "SELECT numbers,author,title,content,createTime,numbers,imgSrc,tag FROM blog_article ba JOIN blog_tag bt ON ba.tagId = bt.id WHERE is_delete = 0;";
-        List<Map<String, Object>> resultList = curdUtil.queryForList(sql,null);
+        String sql = "SELECT numbers,author,title,content,createTime,numbers,imgSrc,tag FROM blog_article ba JOIN blog_tag bt ON ba.tagId = bt.id WHERE is_delete = 0 AND author = ? LIMIT ?,5";
+        Object[] number = {userName,size};
+        List<Map<String, Object>> resultList = curdUtil.queryForList(sql,number);
         List<ArticleDto> articleDtos = new ArrayList<>();
         try {
             for (Map<String, Object> resultMap : resultList) {
@@ -52,6 +53,14 @@ public class BlogArticleDao {
             e.printStackTrace();
         }
         return articleDtos;
+    }
+    public BlogArticle getBlogArticleByNumbers(String number){
+        CurdUtil curdUtil = new CurdUtil();
+        String sql = "SELECT * FROM blog_article WHERE numbers = ? and is_delete = 0";
+        Object[] numbers = {number};
+        List<Map<String, Object>> resultList = curdUtil.queryForList(sql, numbers);
+        List<BlogArticle> blogArticles = getBlogArticles(resultList);
+        return blogArticles.get(0);
     }
     private List<BlogArticle> getBlogArticles(List<Map<String, Object>> resultList) {
         List<BlogArticle> blogArticles = new ArrayList<>();

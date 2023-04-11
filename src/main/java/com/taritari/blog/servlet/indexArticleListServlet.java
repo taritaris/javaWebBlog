@@ -28,8 +28,12 @@ public class indexArticleListServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=utf-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, HEAD, DELETE, PUT");
+        String userName = request.getParameter("userName");
+        int size = Integer.parseInt(request.getParameter("size"));
         BlogArticleService blogArticleService = new BlogArticleService();
-        List<ArticleDto> articleDtos = blogArticleService.indexArticleList();
+        List<ArticleDto> articleDtos = blogArticleService.indexArticleList(userName,size);
         Result<List<ArticleDto>> listResult = Result.buildResult(ResultEnum.OK, articleDtos);
         ServletUtil.sendJson(response, listResult);
     }
