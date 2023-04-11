@@ -1,13 +1,14 @@
 package com.taritari.blog.dao;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.ObjectUtil;
 import com.taritari.blog.entity.BlogArticle;
 import com.taritari.blog.entity.BlogComment;
+import com.taritari.blog.entity.vo.NewCommentVo;
 import com.taritari.blog.utils.CurdUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -57,5 +58,25 @@ public class BlogCommentDao {
             e.printStackTrace();
         }
         return blogComments;
+    }
+
+    public List<NewCommentVo> getCommentNews(String userName){
+        CurdUtil curdUtil = new CurdUtil();
+        String sql = "SELECT id,userNumbers,`comment` FROM blog_comment  WHERE articleNumbers in (SELECT numbers FROM blog_article where author = ?) AND userNumbers !=? ORDER BY createTime desc;";
+        Object[] userNames = {userName,userName};
+        List<NewCommentVo> newCommentVos = new ArrayList<>();
+        List<Map<String, Object>> resultList = curdUtil.queryForList(sql, userNames);
+        try {
+            for (Map<String, Object> resultMap : resultList) {
+                NewCommentVo newCommentVo = new NewCommentVo();
+                newCommentVo.setId(Convert.toInt(resultMap.get("id")));
+                newCommentVo.setUserName(resultMap.get("userNumbers").toString());
+                newCommentVo.setContent(resultMap.get("comment").toString());
+                newCommentVos.add(newCommentVo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newCommentVos;
     }
 }

@@ -30,8 +30,8 @@ com/taritari/blog/utils/Result.java
  com.taritari.blog.utils.Result
 com/taritari/blog/utils/RSAUtil.java
  com.taritari.blog.utils.RSAUtil
-com/taritari/blog/servlet/getCommentServlet.java
- com.taritari.blog.servlet.getCommentServlet
+com/taritari/blog/entity/BlogUser.java
+ com.taritari.blog.entity.BlogUser
 com/taritari/blog/utils/ServletUtil.java
  com.taritari.blog.utils.ServletUtil
 com/taritari/blog/utils/MysqlUtil.java
@@ -44,16 +44,16 @@ com/taritari/blog/config/YmlConfig.java
  com.taritari.blog.config.YmlConfig
 com/taritari/blog/servlet/DecodeRsaServlet.java
  com.taritari.blog.servlet.DecodeRsaServlet
-com/taritari/blog/service/BlogCommentService.java
- com.taritari.blog.service.BlogCommentService
+com/taritari/blog/servlet/UserRegisterServlet.java
+ com.taritari.blog.servlet.UserRegisterServlet
 com/taritari/blog/entity/BlogComment.java
  com.taritari.blog.entity.BlogComment
 com/taritari/blog/dao/BlogArticleDao.java
  com.taritari.blog.dao.BlogArticleDao
-com/taritari/blog/entity/BlogUser.java
- com.taritari.blog.entity.BlogUser
-com/taritari/blog/dao/BlogCommentDao.java
- com.taritari.blog.dao.BlogCommentDao
+com/taritari/blog/dao/BlogBgDao.java
+ com.taritari.blog.dao.BlogBgDao
+com/taritari/blog/service/BlogUserService.java
+ com.taritari.blog.service.BlogUserService
 com/taritari/blog/entity/BlogArticle.java
  com.taritari.blog.entity.BlogArticle
 com/taritari/blog/servlet/BlogArticleSelectByAuthorServlet.java
@@ -70,15 +70,27 @@ com/taritari/blog/entity/vo/NumbersVo.java
  com.taritari.blog.entity.vo.NumbersVo
 com/taritari/blog/servlet/getArticleByNumberServlet.java
  com.taritari.blog.servlet.getArticleByNumberServlet
-com/taritari/blog/dao/UserDao.java
- com.taritari.blog.dao.UserDao
+com/taritari/blog/servlet/getUserInfoByUserNameServlet.java
+ com.taritari.blog.servlet.getUserInfoByUserNameServlet
 com/taritari/blog/servlet/UserLoginServlet.java
  com.taritari.blog.servlet.UserLoginServlet
 com/taritari/blog/servlet/EncryptionAndDecryptionServlet.java
  com.taritari.blog.servlet.EncryptionAndDecryptionServlet
-com/taritari/blog/servlet/UserRegisterServlet.java
- com.taritari.blog.servlet.UserRegisterServlet
-com/taritari/blog/service/BlogUserService.java
- com.taritari.blog.service.BlogUserService
-com/taritari/blog/servlet/getUserInfoByUserNameServlet.java
- com.taritari.blog.servlet.getUserInfoByUserNameServlet
+com/taritari/blog/service/BlogBgService.java
+ com.taritari.blog.service.BlogBgService
+com/taritari/blog/servlet/GetAllBlogBgServlet.java
+ com.taritari.blog.servlet.GetAllBlogBgServlet
+com/taritari/blog/entity/BlogBg.java
+ com.taritari.blog.entity.BlogBg
+com/taritari/blog/dao/UserDao.java
+ com.taritari.blog.dao.UserDao
+com/taritari/blog/servlet/getCommentServlet.java
+ com.taritari.blog.servlet.getCommentServlet
+com/taritari/blog/entity/vo/NewCommentVo.java
+ com.taritari.blog.entity.vo.NewCommentVo
+com/taritari/blog/servlet/GetCommentNewsServlet.java
+ com.taritari.blog.servlet.GetCommentNewsServlet
+com/taritari/blog/dao/BlogCommentDao.java
+ com.taritari.blog.dao.BlogCommentDao
+com/taritari/blog/service/BlogCommentService.java
+ com.taritari.blog.service.BlogCommentService

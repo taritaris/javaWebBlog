@@ -3,11 +3,11 @@ package com.taritari.blog.service;
 
 import com.taritari.blog.dao.BlogCommentDao;
 import com.taritari.blog.entity.BlogComment;
+import com.taritari.blog.entity.BlogUser;
+import com.taritari.blog.entity.vo.NewCommentVo;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author taritari
@@ -43,5 +43,19 @@ public class BlogCommentService {
         }
 
         return blogComments;
+    }
+    /**
+     * 获取最新评论列表
+     * @param userName 用户名
+     * @return List<NewCommentVo> 评论列表
+     * */
+    public List<NewCommentVo> getCommentNews(String userName){
+        List<NewCommentVo> commentNews = blogCommentDao.getCommentNews(userName);
+        BlogUserService blogUserService = new BlogUserService();
+        for (int i =0;i<commentNews.size();i++){
+            BlogUser userInfoByUserName = blogUserService.getUserInfoByUserName(commentNews.get(i).getUserName());
+            commentNews.get(i).setImgSrc(userInfoByUserName.getTitleImgPath());
+        }
+        return commentNews;
     }
 }

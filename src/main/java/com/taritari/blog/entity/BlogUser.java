@@ -15,5 +15,5 @@ public class BlogUser {
     private String message;
     private String titleImgPath;
     private String email;
-
+    private String content;
 }

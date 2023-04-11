@@ -53,6 +53,7 @@ public class UserDao {
             blogUser.setMessage(resultMap.get("message").toString());
             blogUser.setTitleImgPath(resultMap.get("title_img_path").toString());
             blogUser.setEmail(resultMap.get("email").toString());
+            blogUser.setContent(resultMap.get("content").toString());
             return blogUser;
         } else {
             return null;
