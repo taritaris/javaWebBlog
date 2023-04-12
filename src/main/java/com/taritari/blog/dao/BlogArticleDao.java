@@ -17,10 +17,11 @@ import java.util.Map;
  * @description
  */
 public class BlogArticleDao {
-    public List<BlogArticle> selectAll() {
+    public List<BlogArticle> selectAll(int size) {
         CurdUtil curdUtil = new CurdUtil();
-        String sql = "SELECT * FROM blog_article WHERE is_delete=0";
-        List<Map<String, Object>> resultList = curdUtil.queryForList(sql, null);
+        String sql = "SELECT * FROM blog_article WHERE is_delete=0 LIMIT ?,5";
+        Object[] number = {size};
+        List<Map<String, Object>> resultList = curdUtil.queryForList(sql, number);
         return getBlogArticles(resultList);
     }
     public List<BlogArticle> selectArticlesByAuthor(String author,int size) {
@@ -32,7 +33,7 @@ public class BlogArticleDao {
     }
     public List<ArticleDto> selectArticle(String userName,int size) {
         CurdUtil curdUtil = new CurdUtil();
-        String sql = "SELECT numbers,author,title,content,createTime,numbers,imgSrc,tag FROM blog_article ba JOIN blog_tag bt ON ba.tagId = bt.id WHERE is_delete = 0 AND author = ? LIMIT ?,5";
+        String sql = "SELECT numbers,author,title,content,createTime,numbers,imgSrc,ba.tagId FROM blog_article ba JOIN blog_tag bt ON ba.tagId = bt.id WHERE is_delete = 0 AND author = ? LIMIT ?,5";
         Object[] number = {userName,size};
         List<Map<String, Object>> resultList = curdUtil.queryForList(sql,number);
         List<ArticleDto> articleDtos = new ArrayList<>();
@@ -46,7 +47,7 @@ public class BlogArticleDao {
                 articleDto.setCreateTime(sdf2.format(resultMap.get("createTime")));
                 articleDto.setNumbers(resultMap.get("numbers").toString());
                 articleDto.setImgSrc(resultMap.get("imgSrc").toString());
-                articleDto.setTag(resultMap.get("tag").toString());
+                articleDto.setTag(resultMap.get("tagId").toString());
                 articleDtos.add(articleDto);
             }
         } catch (Exception e) {
@@ -71,7 +72,8 @@ public class BlogArticleDao {
                 blogArticle.setAuthor(resultMap.get("author").toString());
                 blogArticle.setTitle(resultMap.get("title").toString());
                 blogArticle.setContent(resultMap.get("content").toString());
-                blogArticle.setCreateTime((Date) resultMap.get("createTime"));
+                SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                blogArticle.setCreateTime(sdf2.format(resultMap.get("createTime")));
                 blogArticle.setModifyTime((Date) resultMap.get("modifyTime"));
                 blogArticle.setNumbers(resultMap.get("numbers").toString());
                 blogArticle.setImgSrc(resultMap.get("imgSrc").toString());

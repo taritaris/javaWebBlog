@@ -1,8 +1,10 @@
 package com.taritari.blog.servlet;
 
+import cn.hutool.core.convert.Convert;
 import com.alibaba.fastjson.JSON;
 import com.taritari.blog.emum.ResultEnum;
 import com.taritari.blog.entity.BlogArticle;
+import com.taritari.blog.entity.dto.ArticleDto;
 import com.taritari.blog.service.BlogArticleService;
 import com.taritari.blog.utils.Result;
 
@@ -30,7 +32,10 @@ public class BlogArticleSelectAllServlet extends HttpServlet {
 
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=utf-8");
-        List<BlogArticle> blogArticles = blogArticleService.selectAll();
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, HEAD, DELETE, PUT");
+        int size = Integer.parseInt(request.getParameter("size"));
+        List<ArticleDto> blogArticles = blogArticleService.selectAll(size);
         Result result = Result.buildResult(ResultEnum.OK, blogArticles);
         PrintWriter out = response.getWriter();
         out.print(JSON.toJSONString(result));

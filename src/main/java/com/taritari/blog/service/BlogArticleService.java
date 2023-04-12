@@ -1,5 +1,6 @@
 package com.taritari.blog.service;
 
+import cn.hutool.core.convert.Convert;
 import com.taritari.blog.dao.BlogArticleDao;
 import com.taritari.blog.dao.BlogArticleviewsDao;
 import com.taritari.blog.dao.BlogCommentDao;
@@ -19,10 +20,31 @@ public class BlogArticleService {
     BlogArticleDao blogArticleDao = new BlogArticleDao();
     BlogArticleviewsDao blogArticleviewsDao = new BlogArticleviewsDao();
     BlogCommentDao blogCommentDao = new BlogCommentDao();
+    BlogTagService blogTagService = new BlogTagService();
+
     EncryptionAndDecryptionService encryptionAndDecryptionService = new EncryptionAndDecryptionService();
-    public List<BlogArticle> selectAll(){
-        List<BlogArticle> blogArticles = blogArticleDao.selectAll();
-        return blogArticles;
+    public List<ArticleDto> selectAll(int size){
+        List<BlogArticle> blogArticles = blogArticleDao.selectAll(size);
+        List<ArticleDto> articleDtos = new ArrayList<>();
+        for (int i = 0;i<blogArticles.size();i++){
+            BlogArticle blogArticle = blogArticles.get(i);
+            String numbers = blogArticle.getNumbers();
+            int commentCountByNumber = blogCommentDao.getCommentCountByNumber(numbers);
+            int viewsByNumber = blogArticleviewsDao.getViewsByNumber(numbers);
+            ArticleDto articleDto = new ArticleDto(
+                    blogArticle.getAuthor()
+                    ,blogArticle.getTitle()
+                    ,blogArticle.getContent()
+                    ,blogArticle.getCreateTime()
+                    ,blogArticle.getNumbers()
+                    ,blogArticle.getImgSrc()
+                    ,commentCountByNumber
+                    ,viewsByNumber
+                    ,blogTagService.getTagName(Convert.toInt(blogArticle.getTagId()))
+            );
+            articleDtos.add(articleDto);
+        }
+        return articleDtos;
     }
     /**
      * 按照作者查询文章
@@ -42,6 +64,7 @@ public class BlogArticleService {
         for (int i =0;i<articleDtos.size();i++){
             articleDtos.get(i).setViews(blogArticleviewsDao.getViewsByNumber(articleDtos.get(i).getNumbers()));
             articleDtos.get(i).setContent(articleDtos.get(i).getContent().substring(0,20));
+            articleDtos.get(i).setTag(blogTagService.getTagName(Convert.toInt(articleDtos.get(i).getTag())));
             articleDtos.get(i).setCommentCount(blogCommentDao.getCommentCountByNumber(articleDtos.get(i).getNumbers()));
         }
         return articleDtos;
@@ -64,6 +87,7 @@ public class BlogArticleService {
         for (int i =0;i<viewsRankTopTen.size();i++){
             BlogArticleviews blogArticleviews = viewsRankTopTen.get(i);
             BlogArticle blogArticleByNumbers = blogArticleDao.getBlogArticleByNumbers(blogArticleviews.getArticleNumber());
+            blogArticleByNumbers.setId(i+1);
             blogArticles.add(blogArticleByNumbers);
         }
         return blogArticles;

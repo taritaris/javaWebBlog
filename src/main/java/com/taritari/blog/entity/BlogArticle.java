@@ -19,7 +19,7 @@ public class BlogArticle {
     private String author;
     private String title;
     private String content;
-    private Date createTime;
+    private String createTime;
     private Date modifyTime;
     private char isDelete;
     private String numbers;

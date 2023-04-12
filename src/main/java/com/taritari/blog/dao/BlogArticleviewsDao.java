@@ -1,10 +1,10 @@
 package com.taritari.blog.dao;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.ObjectUtil;
 import com.taritari.blog.entity.BlogArticleviews;
 import com.taritari.blog.utils.CurdUtil;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -38,10 +38,20 @@ public class BlogArticleviewsDao {
     }
     public List<BlogArticleviews> getViewsRankTopTen(String userName) {
         CurdUtil curdUtil = new CurdUtil();
-        String sql = "SELECT * FROM blog_articleviews WHERE articleNumber IN (SELECT numbers FROM blog_article WHERE author = ?)ORDER BY numberOfViews DESC LIMIT 10";
+        StringBuffer sql = new StringBuffer("SELECT * FROM blog_articleviews WHERE articleNumber IN (SELECT numbers FROM blog_article ");
+        if (ObjectUtil.isNotEmpty(userName)){
+            sql.append("WHERE author = ?");
+        }
+        sql.append(")ORDER BY numberOfViews DESC LIMIT 10");
         Object[] name = {userName};
-        List<Map<String, Object>> resultList = curdUtil.queryForList(sql, name);
+        List<Map<String, Object>> resultList = null;
+        if (ObjectUtil.isNotEmpty(userName)){
+            resultList = curdUtil.queryForList(sql+"", name);
+        }else {
+            resultList = curdUtil.queryForList(sql+"",null);
+        }
         List<BlogArticleviews> blogArticleviews = new ArrayList<>();
+
         try {
             for (Map<String, Object> resultMap : resultList) {
                 BlogArticleviews blogArticleview = new BlogArticleviews();

@@ -54,8 +54,8 @@ com/taritari/blog/dao/BlogBgDao.java
  com.taritari.blog.dao.BlogBgDao
 com/taritari/blog/servlet/UserRegisterServlet.java
  com.taritari.blog.servlet.UserRegisterServlet
-com/taritari/blog/entity/BlogArticle.java
- com.taritari.blog.entity.BlogArticle
+com/taritari/blog/entity/BlogTag.java
+ com.taritari.blog.entity.BlogTag
 com/taritari/blog/entity/vo/UserByCommentNumber.java
  com.taritari.blog.entity.vo.UserByCommentNumber
 com/taritari/blog/servlet/GetNumberOfUserReviewsServlet.java
@@ -82,16 +82,24 @@ com/taritari/blog/dao/UserDao.java
  com.taritari.blog.dao.UserDao
 com/taritari/blog/service/BlogCommentService.java
  com.taritari.blog.service.BlogCommentService
-com/taritari/blog/entity/dto/ArticleDto.java
- com.taritari.blog.entity.dto.ArticleDto
-com/taritari/blog/dao/BlogCommentDao.java
- com.taritari.blog.dao.BlogCommentDao
 com/taritari/blog/entity/BlogArticleviews.java
  com.taritari.blog.entity.BlogArticleviews
-com/taritari/blog/dao/BlogArticleviewsDao.java
- com.taritari.blog.dao.BlogArticleviewsDao
+com/taritari/blog/dao/BlogCommentDao.java
+ com.taritari.blog.dao.BlogCommentDao
+com/taritari/blog/entity/BlogArticle.java
+ com.taritari.blog.entity.BlogArticle
 com/taritari/blog/dao/BlogArticleDao.java
  com.taritari.blog.dao.BlogArticleDao
+com/taritari/blog/entity/dto/ArticleDto.java
+ com.taritari.blog.entity.dto.ArticleDto
+com/taritari/blog/dao/BlogArticleviewsDao.java
+ com.taritari.blog.dao.BlogArticleviewsDao
+com/taritari/blog/servlet/GetAllTagServlet.java
+ com.taritari.blog.servlet.GetAllTagServlet
+com/taritari/blog/service/BlogTagService.java
+ com.taritari.blog.service.BlogTagService
+com/taritari/blog/dao/BlogTagDao.java
+ com.taritari.blog.dao.BlogTagDao
 com/taritari/blog/servlet/BlogArticleSelectByAuthorServlet.java
  com.taritari.blog.servlet.BlogArticleSelectByAuthorServlet
 com/taritari/blog/servlet/GetArticleRankTopTenServlet.java
