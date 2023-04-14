@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class BlogCommentService {
     private final BlogCommentDao blogCommentDao = new BlogCommentDao();
+    private final BlogUserService blogUserService = new BlogUserService();
     public List<BlogComment> getBlogCommentByArticle(String numbers){
         List<BlogComment> blogCommentByArticleNumbers = blogCommentDao.getBlogCommentByArticleNumbers(numbers);
         return blogCommentByArticleNumbers;
@@ -30,12 +31,14 @@ public class BlogCommentService {
 
         for (int i = 0;i<blogCommentByArticle.size();i++){
             BlogComment blogComment = blogCommentByArticle.get(i);
+            BlogUser userInfoByUserName = blogUserService.getUserInfoByUserName(blogComment.getUserNumber());
+            blogComment.setImgSrc(userInfoByUserName.getTitleImgPath());
             String number = blogComment.getNumber();
             List<BlogComment> blogCommentByParentNumber = getBlogCommentByParentNumber(number);
-            List<BlogComment> blogCommentList = new ArrayList<>();
             List<BlogComment> newList = new ArrayList<>();
             for (int j = 0;j<blogCommentByParentNumber.size();j++){
                 BlogComment blogCommentChild = blogCommentByParentNumber.get(j);
+                blogCommentChild.setImgSrc(blogUserService.getUserInfoByUserName(blogCommentChild.getUserNumber()).getTitleImgPath());
                 newList.add(blogCommentChild);
             }
             blogComment.setReplies(newList);

@@ -35,7 +35,8 @@ public class BlogArticleSelectAllServlet extends HttpServlet {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, HEAD, DELETE, PUT");
         int size = Integer.parseInt(request.getParameter("size"));
-        List<ArticleDto> blogArticles = blogArticleService.selectAll(size);
+        String tagId = request.getParameter("tagId");
+        List<ArticleDto> blogArticles = blogArticleService.selectAll(tagId, size);
         Result result = Result.buildResult(ResultEnum.OK, blogArticles);
         PrintWriter out = response.getWriter();
         out.print(JSON.toJSONString(result));

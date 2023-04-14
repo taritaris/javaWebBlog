@@ -7,6 +7,7 @@ import com.taritari.blog.dao.BlogCommentDao;
 import com.taritari.blog.entity.BlogArticle;
 import com.taritari.blog.entity.BlogArticleviews;
 import com.taritari.blog.entity.dto.ArticleDto;
+import com.taritari.blog.entity.vo.SimilarityArticleVo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +24,8 @@ public class BlogArticleService {
     BlogTagService blogTagService = new BlogTagService();
 
     EncryptionAndDecryptionService encryptionAndDecryptionService = new EncryptionAndDecryptionService();
-    public List<ArticleDto> selectAll(int size){
-        List<BlogArticle> blogArticles = blogArticleDao.selectAll(size);
+    public List<ArticleDto> selectAll(String tagId, int size){
+        List<BlogArticle> blogArticles = blogArticleDao.selectAll(tagId, size);
         List<ArticleDto> articleDtos = new ArrayList<>();
         for (int i = 0;i<blogArticles.size();i++){
             BlogArticle blogArticle = blogArticles.get(i);
@@ -91,5 +92,15 @@ public class BlogArticleService {
             blogArticles.add(blogArticleByNumbers);
         }
         return blogArticles;
+    }
+    /**
+     * 获取相识文章
+     * */
+    public List<SimilarityArticleVo> getSimilarityArticle(int tagId){
+        List<SimilarityArticleVo> similarityArticle = blogArticleDao.getSimilarityArticle(tagId);
+        for (int i =0;i<similarityArticle.size();i++){
+            similarityArticle.get(i).setId(i+1);
+        }
+        return similarityArticle;
     }
 }

@@ -1,8 +1,10 @@
 package com.taritari.blog.dao;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.ObjectUtil;
 import com.taritari.blog.entity.BlogArticle;
 import com.taritari.blog.entity.dto.ArticleDto;
+import com.taritari.blog.entity.vo.SimilarityArticleVo;
 import com.taritari.blog.utils.CurdUtil;
 
 import java.text.SimpleDateFormat;
@@ -17,11 +19,21 @@ import java.util.Map;
  * @description
  */
 public class BlogArticleDao {
-    public List<BlogArticle> selectAll(int size) {
+    public List<BlogArticle> selectAll(String tagId ,int size) {
         CurdUtil curdUtil = new CurdUtil();
-        String sql = "SELECT * FROM blog_article WHERE is_delete=0 LIMIT ?,5";
-        Object[] number = {size};
-        List<Map<String, Object>> resultList = curdUtil.queryForList(sql, number);
+        StringBuffer sqlBuf = new StringBuffer("SELECT * FROM blog_article WHERE is_delete=0 ");
+        String sql = null;
+        List<Map<String, Object>> resultList = null;
+        if (!tagId.equals("0")){
+            Object[] number = {tagId, size};
+            sql = sqlBuf.append(" and tagId = ? LIMIT ?,5")+"";
+            resultList = curdUtil.queryForList(sql, number);
+        }else {
+            Object[] number = {size};
+            sql = sqlBuf.append(" LIMIT ?,5")+"";
+            resultList = curdUtil.queryForList(sql, number);
+        }
+
         return getBlogArticles(resultList);
     }
     public List<BlogArticle> selectArticlesByAuthor(String author,int size) {
@@ -87,7 +99,7 @@ public class BlogArticleDao {
     }
     public ArticleDto getArticleByNumbers(String numbers){
         CurdUtil curdUtil = new CurdUtil();
-        String sql = "SELECT numbers,author,title,content,createTime,numbers,imgSrc,tag FROM blog_article ba JOIN blog_tag bt ON ba.tagId = bt.id WHERE is_delete = 0 AND numbers = ?";
+        String sql = "SELECT numbers,author,title,content,createTime,numbers,imgSrc,ba.tagId FROM blog_article ba JOIN blog_tag bt ON ba.tagId = bt.id WHERE is_delete = 0 AND numbers = ?";
         Object[] number = {numbers};
         List<Map<String, Object>> resultList = curdUtil.queryForList(sql,number);
         List<ArticleDto> articleDtos = new ArrayList<>();
@@ -101,12 +113,30 @@ public class BlogArticleDao {
                 articleDto.setCreateTime(sdf2.format(resultMap.get("createTime")));
                 articleDto.setNumbers(resultMap.get("numbers").toString());
                 articleDto.setImgSrc(resultMap.get("imgSrc").toString());
-                articleDto.setTag(resultMap.get("tag").toString());
+                articleDto.setTag(resultMap.get("tagId").toString());
                 articleDtos.add(articleDto);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return articleDto;
+    }
+    public List<SimilarityArticleVo> getSimilarityArticle(int TagId){
+        CurdUtil curdUtil = new CurdUtil();
+        String sql = "SELECT ba.title,ba.numbers FROM blog_article ba JOIN blog_articleviews bt ON ba.numbers=bt.articleNumber WHERE ba.tagId = ? ORDER BY numberOfViews DESC LIMIT 10;";
+        Object[] id = {TagId};
+        List<Map<String, Object>> resultList = curdUtil.queryForList(sql,id);
+        List<SimilarityArticleVo> articleVos = new ArrayList<>();
+        try {
+            for (Map<String, Object> resultMap : resultList) {
+                SimilarityArticleVo similarityArticleVo = new SimilarityArticleVo();
+                similarityArticleVo.setTitle(resultMap.get("title").toString());
+                similarityArticleVo.setNumber(resultMap.get("numbers").toString());
+                articleVos.add(similarityArticleVo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return articleVos;
     }
 }
