@@ -36,8 +36,6 @@ public class UserLoginServlet extends HttpServlet {
         ServletUtil.sendJson(response, result);
     }
 
-
-
 }
 
 
