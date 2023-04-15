@@ -1,14 +1,18 @@
 package com.taritari.blog.dao;
 
 import cn.hutool.core.convert.Convert;
+import cn.hutool.core.date.DatePattern;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.taritari.blog.entity.BlogArticle;
 import com.taritari.blog.entity.BlogComment;
 import com.taritari.blog.entity.vo.NewCommentVo;
 import com.taritari.blog.utils.CurdUtil;
+import com.taritari.blog.utils.SnowflakeUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -94,4 +98,33 @@ public class BlogCommentDao {
         }
         return count;
     }
+    /**
+     * 用户评论
+     * */
+    public int commentArticle(BlogComment blogComment){
+        CurdUtil curdUtil = new CurdUtil();
+        String sql = "INSERT INTO blog_comment VALUES(NULL,?,?,?,?,?,?,?)";
+        List<Object> data = new ArrayList<>();
+        blogComment.setNumber(SnowflakeUtils.generateIdStr());
+        blogComment.setCreateTime((DateUtil.now()));
+        data.add(blogComment.getNumber());
+        data.add(blogComment.getArticleNumber());
+        data.add(blogComment.getUserNumber());
+        data.add(blogComment.getCreateTime());
+        if (ObjectUtil.isNotEmpty(blogComment.getParentNumber())){
+            data.add(blogComment.getParentNumber());
+        }else {
+            data.add(null);
+        }
+        data.add(blogComment.getComment());
+        if (ObjectUtil.isNotEmpty(blogComment.getParentUser())){
+            data.add(blogComment.getParentUser());
+        }else {
+            data.add(null);
+        }
+        System.out.println(data);
+        Object[] array = data.toArray();
+        return curdUtil.execute(sql, array);
+    }
+
 }

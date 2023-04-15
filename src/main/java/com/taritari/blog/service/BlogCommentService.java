@@ -61,4 +61,11 @@ public class BlogCommentService {
         }
         return commentNews;
     }
+    /**
+     * 用户添加评论
+     * */
+    public int userCommentArticle(BlogComment blogComment){
+        int i = blogCommentDao.commentArticle(blogComment);
+        return i;
+    }
 }
