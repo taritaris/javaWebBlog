@@ -6,6 +6,7 @@ import com.taritari.blog.entity.BlogArticle;
 import com.taritari.blog.entity.dto.ArticleDto;
 import com.taritari.blog.entity.vo.SimilarityArticleVo;
 import com.taritari.blog.utils.CurdUtil;
+import com.taritari.blog.utils.SnowflakeUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -19,20 +20,38 @@ import java.util.Map;
  * @description
  */
 public class BlogArticleDao {
-    public List<BlogArticle> selectAll(String tagId ,int size) {
+    public List<BlogArticle> selectAll(String tagId ,int size,String keyWord) {
         CurdUtil curdUtil = new CurdUtil();
         StringBuffer sqlBuf = new StringBuffer("SELECT * FROM blog_article WHERE is_delete=0 ");
-        String sql = null;
-        List<Map<String, Object>> resultList = null;
+//        Object[] number = null;
+        List<Object> data = new ArrayList<>();
+        String sql ;
+        List<Map<String, Object>> resultList ;
         if (!tagId.equals("0")){
-            Object[] number = {tagId, size};
-            sql = sqlBuf.append(" and tagId = ? LIMIT ?,5")+"";
-            resultList = curdUtil.queryForList(sql, number);
+             data.add(tagId);
+             sqlBuf.append(" and tagId = ? ");
+             if (!keyWord.equals("")){
+
+                 sqlBuf.append(" AND title LIKE '%");
+                 sqlBuf.append(keyWord);
+                 sqlBuf.append("%' OR content LIKE '%");
+                 sqlBuf.append(keyWord);
+                 sqlBuf.append("%' ");
+             }
         }else {
-            Object[] number = {size};
-            sql = sqlBuf.append(" LIMIT ?,5")+"";
-            resultList = curdUtil.queryForList(sql, number);
+            if (!keyWord.equals("")){
+
+                sqlBuf.append(" AND title LIKE '%");
+                sqlBuf.append(keyWord);
+                sqlBuf.append("%' OR content LIKE '%");
+                sqlBuf.append(keyWord);
+                sqlBuf.append("%' ");
+            }
         }
+        data.add(size);
+        sql = sqlBuf.append(" LIMIT ?,5")+"";
+        Object[] array = data.toArray();
+        resultList = curdUtil.queryForList(sql, array);
 
         return getBlogArticles(resultList);
     }
@@ -138,5 +157,16 @@ public class BlogArticleDao {
             e.printStackTrace();
         }
         return articleVos;
+    }
+    public int addArticle(BlogArticle blogArticle){
+        CurdUtil curdUtil = new CurdUtil();
+        long numbers = SnowflakeUtils.generateId();
+        String sql = "INSERT INTO blog_article VALUES(NULL,?,?,?,?,?,0,?,?,?);";
+        Object[] params = {blogArticle.getAuthor(),blogArticle.getTitle(), blogArticle.getContent(),
+                DateUtil.now(), DateUtil.now(), numbers, blogArticle.getImgSrc(),blogArticle.getTagId()};
+        String viewSql= "INSERT INTO blog_articleviews VALUES(NULL,?,0)";
+        Object[] viewParams = {numbers};
+        curdUtil.execute(viewSql, viewParams);
+        return curdUtil.execute(sql, params);
     }
 }

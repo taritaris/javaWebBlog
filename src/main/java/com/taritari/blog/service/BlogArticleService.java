@@ -24,8 +24,8 @@ public class BlogArticleService {
     BlogTagService blogTagService = new BlogTagService();
 
     EncryptionAndDecryptionService encryptionAndDecryptionService = new EncryptionAndDecryptionService();
-    public List<ArticleDto> selectAll(String tagId, int size){
-        List<BlogArticle> blogArticles = blogArticleDao.selectAll(tagId, size);
+    public List<ArticleDto> selectAll(String tagId, int size,String keyWord){
+        List<BlogArticle> blogArticles = blogArticleDao.selectAll(tagId, size,keyWord);
         List<ArticleDto> articleDtos = new ArrayList<>();
         for (int i = 0;i<blogArticles.size();i++){
             BlogArticle blogArticle = blogArticles.get(i);
@@ -102,5 +102,12 @@ public class BlogArticleService {
             similarityArticle.get(i).setId(i+1);
         }
         return similarityArticle;
+    }
+    /**
+     * 添加文章
+     * */
+    public int addArticle(BlogArticle blogArticle){
+        int i = blogArticleDao.addArticle(blogArticle);
+        return i;
     }
 }
