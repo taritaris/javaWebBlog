@@ -2,7 +2,6 @@ package com.taritari.blog.servlet;
 
 import com.taritari.blog.emum.ResultEnum;
 import com.taritari.blog.entity.BlogComment;
-import com.taritari.blog.entity.BlogUser;
 import com.taritari.blog.service.BlogCommentService;
 import com.taritari.blog.utils.EntityUtil;
 import com.taritari.blog.utils.Result;

@@ -23,7 +23,6 @@ public class BlogArticleDao {
     public List<BlogArticle> selectAll(String tagId ,int size,String keyWord) {
         CurdUtil curdUtil = new CurdUtil();
         StringBuffer sqlBuf = new StringBuffer("SELECT * FROM blog_article WHERE is_delete=0 ");
-//        Object[] number = null;
         List<Object> data = new ArrayList<>();
         String sql ;
         List<Map<String, Object>> resultList ;
@@ -31,7 +30,6 @@ public class BlogArticleDao {
              data.add(tagId);
              sqlBuf.append(" and tagId = ? ");
              if (!keyWord.equals("")){
-
                  sqlBuf.append(" AND title LIKE '%");
                  sqlBuf.append(keyWord);
                  sqlBuf.append("%' OR content LIKE '%");
@@ -40,7 +38,6 @@ public class BlogArticleDao {
              }
         }else {
             if (!keyWord.equals("")){
-
                 sqlBuf.append(" AND title LIKE '%");
                 sqlBuf.append(keyWord);
                 sqlBuf.append("%' OR content LIKE '%");
