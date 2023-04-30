@@ -39,4 +39,5 @@ public class UserService {
         String s = HttpClientUtil.get(UrlEnum.ADMIN +"/user/modify?id="+user.getId()+"&username="+user.getUsername()+"&email="+user.getEmail()+"&birthday="+user.getBirthday());
         return s;
     }
+
 }

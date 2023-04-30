@@ -26,8 +26,15 @@ public class BlogUserService {
         String password2MD5 = md5Utils.string2MD5(password);
         JedisPoolUtil jedisPoolUtil = new JedisPoolUtil();
         Jedis pool = jedisPoolUtil.getPool();
-        String name = pool.get(username);
         BlogUser blogUser = userDao.login(username, password2MD5);
+        if (blogUser.getAuthority()==1){
+            String token = jwtUtils.generateToken(Base64.getUrlEncoder().withoutPadding().encodeToString(RSAUtil.encrypt(blogUser.getUsername().getBytes())));
+            TokenDto tokenDto = new TokenDto();
+            tokenDto.setToken(token);
+            System.out.println("管理员登录");
+            return Result.buildResult(ResultEnum.OK,tokenDto);
+        }
+        String name = pool.get(username);
         if (ObjectUtil.isEmpty(blogUser)) {
             return Result.buildResult(ResultEnum.NOT_FOUND);
         }

@@ -32,7 +32,7 @@ public class GetAllUserServlet extends HttpServlet {
         int page = Convert.toInt(request.getParameter("page"));
         String username = request.getParameter("username");
         String result = userService.getAll(page,username);
-            Object parse = JSON.parse(result);
+        Object parse = JSON.parse(result);
         ServletUtil.sendJson(response, Result.buildResult(ResultEnum.OK,parse));
 
     }

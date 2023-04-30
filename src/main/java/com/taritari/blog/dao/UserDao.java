@@ -1,5 +1,6 @@
 package com.taritari.blog.dao;
 
+import cn.hutool.core.convert.Convert;
 import com.taritari.blog.entity.BlogUser;
 import com.taritari.blog.entity.vo.UserByCommentNumber;
 import com.taritari.blog.utils.CurdUtil;
@@ -25,6 +26,7 @@ public class UserDao {
             blogUser.setBirthday((Date) resultMap.get("birthday"));
             blogUser.setMessage((String) resultMap.get("message"));
             blogUser.setTitleImgPath((String) resultMap.get("title_img_path"));
+            blogUser.setAuthority(Convert.toInt(resultMap.get("authority")));
             return blogUser;
         } else {
             return null;

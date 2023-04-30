@@ -16,4 +16,5 @@ public class BlogUser {
     private String titleImgPath;
     private String email;
     private String content;
+    private int authority;
 }
