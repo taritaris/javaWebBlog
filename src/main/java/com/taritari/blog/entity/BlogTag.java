@@ -12,4 +12,5 @@ public class BlogTag {
     private int id;
     private String tagName;
     private String tagId;
+    private int page;
 }

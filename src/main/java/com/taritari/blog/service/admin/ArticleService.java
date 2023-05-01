@@ -14,7 +14,7 @@ public class ArticleService {
      * 查询全部文章
      * */
     public String getAllArticle(AdminArticleDto adminArticleDto){
-        String s = HttpClientUtil.get(UrlEnum.ADMIN + "/article/articles?page="+adminArticleDto.getPage());
+        String s = HttpClientUtil.get(UrlEnum.ADMIN + "/article/articles?page="+adminArticleDto.getPage()+"&search="+adminArticleDto.getSearch()+"&startTime="+adminArticleDto.getStartTime()+"&endTime="+adminArticleDto.getEndTime());
         return s ;
     }
     /**

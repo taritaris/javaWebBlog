@@ -11,4 +11,7 @@ import lombok.Data;
 public class AdminArticleDto {
     private Integer id;
     private int page;
+    private String search;
+    private String startTime;
+    private String endTime;
 }

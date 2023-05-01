@@ -26,4 +26,5 @@ public class BlogComment {
     private String parentUser;
     private String imgSrc;
     private List<BlogComment> replies;
+
 }
