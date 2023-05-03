@@ -23,4 +23,5 @@ public class ArticleDto {
     private int CommentCount;
     private int views;
     private String tag;
+    private int id;
 }

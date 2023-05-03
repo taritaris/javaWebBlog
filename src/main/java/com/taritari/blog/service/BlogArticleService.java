@@ -42,6 +42,7 @@ public class BlogArticleService {
                     ,commentCountByNumber
                     ,viewsByNumber
                     ,blogTagService.getTagName(Convert.toInt(blogArticle.getTagId()))
+                    ,blogArticle.getId()
             );
             articleDtos.add(articleDto);
         }

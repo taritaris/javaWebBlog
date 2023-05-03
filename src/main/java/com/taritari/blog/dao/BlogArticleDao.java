@@ -1,5 +1,6 @@
 package com.taritari.blog.dao;
 
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.taritari.blog.entity.BlogArticle;
@@ -115,7 +116,7 @@ public class BlogArticleDao {
     }
     public ArticleDto getArticleByNumbers(String numbers){
         CurdUtil curdUtil = new CurdUtil();
-        String sql = "SELECT numbers,author,title,content,createTime,numbers,imgSrc,ba.tagId FROM blog_article ba JOIN blog_tag bt ON ba.tagId = bt.id WHERE is_delete = 0 AND numbers = ?";
+        String sql = "SELECT numbers,author,title,content,createTime,numbers,imgSrc,ba.tagId ,ba.id FROM blog_article ba JOIN blog_tag bt ON ba.tagId = bt.tagId WHERE is_delete = 0 AND numbers = ?";
         Object[] number = {numbers};
         List<Map<String, Object>> resultList = curdUtil.queryForList(sql,number);
         List<ArticleDto> articleDtos = new ArrayList<>();
@@ -130,6 +131,7 @@ public class BlogArticleDao {
                 articleDto.setNumbers(resultMap.get("numbers").toString());
                 articleDto.setImgSrc(resultMap.get("imgSrc").toString());
                 articleDto.setTag(resultMap.get("tagId").toString());
+                articleDto.setId(Convert.toInt(resultMap.get("id").toString()));
                 articleDtos.add(articleDto);
             }
         } catch (Exception e) {
